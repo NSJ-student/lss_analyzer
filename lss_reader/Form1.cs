@@ -13,12 +13,15 @@ namespace lss_reader
 {
 	public partial class Form1 : Form
 	{
+		int PrevWidth, PrevHeight;
 		LssContainer container;
 		List<LssElements> tag_components;
 		BackgroundWorker worker;
 		public Form1()
 		{
 			InitializeComponent();
+			PrevWidth = Size.Width;
+			PrevHeight = Size.Height;
 			tag_components = new List<LssElements>();
 
 			worker = new BackgroundWorker();
@@ -120,6 +123,9 @@ namespace lss_reader
 				tbInstruction.Text = element.Instruction;
 				tbHexInstruction.Text = element.HexInstruction;
 				tbComment.Text = element.CommentValue;
+
+				rtbText.Focus();
+				rtbText.Find(element.StringLine, RichTextBoxFinds.MatchCase);
 			}
 		}
 
@@ -155,15 +161,17 @@ namespace lss_reader
 				for (int cnt = StartIndex; cnt < EndIndex; cnt++)
 				{
 					LssElements item = container.ElementList[cnt];
-					if (cbComment.Checked == false)
+					if(item.ElementType == LssElements.LssType.CSOURCE)
 					{
-						if (!item.Memory.Equals("0"))
+						rtbText.SelectionColor = Color.Black;
+						if (cbComment.Checked == true)
 						{
 							tag_components.Add(item);
 						}
 					}
 					else
 					{
+						rtbText.SelectionColor = Color.Red;
 						tag_components.Add(item);
 					}
 					rtbText.AppendText(item.StringLine);
@@ -173,6 +181,46 @@ namespace lss_reader
 				lbComponents.DataSource = tag_components;
 				lbComponents.DisplayMember = "Memory";
 			}
+		}
+
+		private void Form1_SizeChanged(object sender, EventArgs e)
+		{
+			if (Size.Width <= 695)
+				Size = new Size(695, Size.Height);
+			if (Size.Height <= 553)
+				Size = new Size(Size.Width, 553);
+
+			if (PrevWidth != Size.Width)
+			{
+				int DiffW = Size.Width - PrevWidth;
+				PrevWidth = Size.Width;
+				gbElement.Location = new Point(Size.Width / 2 - gbElement.Size.Width / 2,
+												Size.Height - 206);
+
+
+				lbLssFile.Location = new Point(lbLssFile.Location.X + DiffW, lbLssFile.Location.Y);
+				lbComponents.Location = new Point(lbComponents.Location.X + DiffW, 
+											lbComponents.Location.Y);
+				cbComment.Location = new Point(cbComment.Location.X + DiffW, cbComment.Location.Y);
+				tbSearch.Location = new Point(tbSearch.Location.X + DiffW, tbSearch.Location.Y);
+				btnOpenFile.Location = new Point(btnOpenFile.Location.X + DiffW, btnOpenFile.Location.Y);
+
+				pbProgress.Size = new Size(pbProgress.Size.Width + DiffW, pbProgress.Size.Height);
+				tbFileName.Size = new Size(tbFileName.Size.Width + DiffW, tbFileName.Size.Height);
+				rtbText.Size = new Size(rtbText.Size.Width + DiffW, rtbText.Size.Height);
+			}
+			if (PrevHeight != Size.Height)
+			{
+				int DiffH = Size.Height - PrevHeight;
+				PrevHeight = Size.Height;
+				gbElement.Location = new Point(Size.Width / 2 - gbElement.Size.Width / 2,
+												Size.Height - 206);
+				lbComponents.Location = new Point(lbComponents.Location.X,
+											lbComponents.Location.Y + DiffH);
+				lbLssFile.Size = new Size(lbLssFile.Size.Width, lbLssFile.Size.Height + DiffH);
+				rtbText.Size = new Size(rtbText.Size.Width, rtbText.Size.Height + DiffH);
+			}
+
 		}
 	}
 }

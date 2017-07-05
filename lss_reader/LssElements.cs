@@ -45,14 +45,14 @@ namespace lss_reader
 					ElementList.Add(element);
 					if (element.Tag != null)
 						TagList.Add(element);
-					Update(cnt * 100 / AllStrings.Length);
+					Update((cnt+1) * 100 / AllStrings.Length);
 				}
 			}
 		}
 	}
 	class LssElements
 	{
-		enum LssType
+		public enum LssType
 		{
 			TAG_NAME,
 			ASSEM_INSTRUCTION,
@@ -69,6 +69,13 @@ namespace lss_reader
 		uint hexInstruction;
 		string Comment;
 
+		public LssType ElementType
+		{
+			get
+			{
+				return Type;
+			}
+		}
 		public string CommentValue
 		{
 			get

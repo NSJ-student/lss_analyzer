@@ -58,6 +58,7 @@
 			// 
 			this.lbLssFile.FormattingEnabled = true;
 			this.lbLssFile.ImeMode = System.Windows.Forms.ImeMode.NoControl;
+			this.lbLssFile.IntegralHeight = false;
 			this.lbLssFile.ItemHeight = 15;
 			this.lbLssFile.Location = new System.Drawing.Point(400, 37);
 			this.lbLssFile.Name = "lbLssFile";
@@ -291,7 +292,9 @@
 			this.Controls.Add(this.rtbText);
 			this.Controls.Add(this.lbLssFile);
 			this.Name = "Form1";
+			this.ShowIcon = false;
 			this.Text = "lss reader";
+			this.SizeChanged += new System.EventHandler(this.Form1_SizeChanged);
 			this.gbElement.ResumeLayout(false);
 			this.gbElement.PerformLayout();
 			this.ResumeLayout(false);
