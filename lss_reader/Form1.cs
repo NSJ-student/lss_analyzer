@@ -180,6 +180,7 @@ namespace lss_reader
 				lbComponents.DataSource = null;
 				lbComponents.DataSource = tag_components;
 				lbComponents.DisplayMember = "Memory";
+				lbComponents.SelectedItem = null;
 			}
 		}
 

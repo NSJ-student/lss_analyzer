@@ -162,7 +162,7 @@ namespace lss_reader
 					{
 						hexInstruction = Convert.ToUInt32(split2[1].Replace(" ", string.Empty), 16);
 						strInstruction = split2[2].Trim();
-						if (split2.Length == 4)
+						if (split2.Length >= 4)
 						{
 							strParameter = split2[3];
 						}
