@@ -148,7 +148,8 @@ namespace lss_reader
 					strParameter = null;
 					return;
 				}
-				if ((split1[0].Length == 8) && (split1[0][0] == ' ') && (split1[0][1] == ' '))
+				if ((split1[0].Length == 8) &&
+					( ((split1[0][0] == ' ') && (split1[0][1] == ' ')) || (split1[0][0] == '2') ))
 				{
 					if (cmt.Length == 2)
 					{
