@@ -123,9 +123,12 @@ namespace lss_reader
 				tbInstruction.Text = element.Instruction;
 				tbHexInstruction.Text = element.HexInstruction;
 				tbComment.Text = element.CommentValue;
-
-				rtbText.Focus();
-				rtbText.Find(element.StringLine, RichTextBoxFinds.MatchCase);
+				
+				rtbText.SelectionBackColor = rtbText.BackColor;
+				int startindex=rtbText.Find(element.StringLine, RichTextBoxFinds.MatchCase);
+				rtbText.Select(startindex, element.StringLine.Length);
+				rtbText.SelectionBackColor = Color.Aqua;
+				rtbText.ScrollToCaret();
 			}
 		}
 
